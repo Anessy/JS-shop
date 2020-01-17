@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded',function(){
 
     //========================================================================================
 
+
+
+
+    
 // для того, чтобы функция работала именно в нужном месте, а не висела в ожидании раньше обьявляем ее через const
 // ниже можно вызывать, выше - нет
 // function() то же самое () =>
@@ -67,21 +71,31 @@ const closeCart = (event) => {
     // куда кликнули мышкой) используем if (если кликнули равно поле cart то закрыть ИЛИ если кликнули на крестик )
     // contains проверяет есть ли такой класс у элемента и возвращает TRUE или FALSE
     const target = event.target;
-    if (target === cart || target.classList.contains('cart-close')) {
-        cart.style.display = '';
-    }
+    if (target === cart ||
+        target.classList.contains('cart-close') ||
+        // отслеживаем нажатие на клавишу ESC 
+        event.keyCode === 27) {
+            cart.style.display = '';
+            // удаляем отслеживание события нажатия на клавишу после закрытия корзины
+            cart.removeEventListener('click', closeCart);
+    } 
     
 };
 
 // напишем функцию, которая будет открывать корзину
-const openCart = () => {
+const openCart = (event) => {
+    // запрещаем стандартное поведение браузера по клике на ссылку (при клике на корзину)
+    event.preventDefault();
     // модальное окно корзины в css прописано как display: none  Меняем это
     cart.style.display = 'flex';
+    // закрывать корзину при нажатии на кнопку ESC
+    document.addEventListener('keyup', closeCart);
 };
 // это наша кнопка-корзина. Через addEventListener навешиваем событие при клике - открыть
 cartBtn.addEventListener('click', openCart);
 // закрыть корзину, кликнув на сером фоне позади (cart) 
 cart.addEventListener('click', closeCart);
+
 
 
 
