@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded',function(){
 // получаем элемент корзину из html 
     const cart = document.querySelector('.cart');
 
+    const getGoods = (handler) => {
     //========================================================================================
         // fetch - это api - может отправлять сетевые запросы на сервер и подгружать новую информацию по мере необходимости.
         // метод then ожидает promise (обещание). Как только он сработал, запускается указанная функция
@@ -25,16 +26,15 @@ document.addEventListener('DOMContentLoaded',function(){
         })
         // принимает обработанный промис, который вренется от json
         // получим товары в виде объктов
-        .then((goods) => {
-            console.log(goods)
-        })
+        .then(handler);
         //console.log(fetch('db/db.Json'));
         // результатом вывода этой ф-ции через консоль будет promice - обещание
         // сначала оно в стадии "ожидание" - pending, потом "выполнено" - resolved (если данные получены)
         // или "не выполнено" - rejected (если данные не получены)
     //=======================================================================================
-    
+    };
 
+ 
 
 // для того, чтобы функция работала именно в нужном месте, а не висела в ожидании раньше обьявляем ее через const
 // ниже можно вызывать, выше - нет
@@ -118,7 +118,13 @@ cartBtn.addEventListener('click', openCart);
 // закрыть корзину, кликнув на сером фоне позади (cart) 
 cart.addEventListener('click', closeCart);
 
+const renderCard() = (item) => {
+    item.forEach(element => {
+        
+    });
+}
 
+getGoods(renderCard);
 
 
 
